@@ -7,7 +7,7 @@ test('schedules period-end cancellation and retains access through the paid peri
   const next = scheduleCancellation(original);
   assert.equal(next.cancelAtPeriodEnd, true);
   assert.equal(next.currentPeriodEnd, original.currentPeriodEnd);
-  assert.equal(next.unusedCreditCents, 0);
+  assert.equal(next.unusedCreditCents, original.unusedCreditCents);
   assert.equal(original.unusedCreditCents, 1200);
 });
 test('rejects a second schedule request', () => {

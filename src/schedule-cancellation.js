@@ -5,5 +5,5 @@
  */
 export function scheduleCancellation(account) {
   if (account.cancelAtPeriodEnd) throw new Error('Cancellation is already scheduled');
-  return {...account, cancelAtPeriodEnd: true, unusedCreditCents: 0};
+  return {...account, cancelAtPeriodEnd: true};
 }

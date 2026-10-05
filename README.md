@@ -8,9 +8,9 @@ This repository contains only synthetic sample code for verifying GitHub approva
 
 The sample now proposes self-serve cancellation. Cancellation stops renewal and leaves access through
 `currentPeriodEnd`. Account credits come from referrals, outage compensation and promotions; outside
-cancellation, they offset later invoices until used or expired. The cancellation request does not yet
-establish whether cancellation forfeits those credits or keeps their normal terms. The proposed helper
-removes the remaining balance immediately when cancellation is scheduled.
+cancellation, they offset later invoices until used or expired. The QA billing product owner decided
+in Slack that cancellation preserves unused credits under those existing use-and-expiry terms. The
+helper schedules period-end cancellation without changing the remaining credit balance.
 
 Customer-facing credit and cancellation policy is decided by Marcus Graves, the QA billing product
 owner available in the connected Slack workspace. Engineering implements that decision. The helper

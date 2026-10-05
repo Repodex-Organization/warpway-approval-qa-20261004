@@ -1,0 +1,28 @@
+name: Open disposable approval QA PR
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test sample code
+        run: node --test
+      - name: Create documentation branch
+        env:
+          QA_BRANCH: qa/approval-${{ github.run_id }}
+        run: |
+          git switch -c "$QA_BRANCH"
+          printf '\nApproval instrumentation test: %s.\n' "$GITHUB_RUN_ID" >> README.md
+          git add README.md
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Prepare a disposable approval observation'
+          git push origin "$QA_BRANCH"
+      - name: Open draft pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          QA_BRANCH: qa/approval-${{ github.run_id }}
+        run: |
+          gh pr create --draft --base main --head "$QA_BRANCH" --title 'QA: observe GitHub approval lifecycle' --body 'Synthetic documentation change for approval instrumentation QA. Verify readiness, required human approval, head/rule changes and closure through the normal application. This workflow never approves or merges.'
